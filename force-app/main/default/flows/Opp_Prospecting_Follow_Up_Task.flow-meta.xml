@@ -29,6 +29,37 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>
+        <name>Create_Account_Follow_Up_Task</name>
+        <label>Create Account Follow Up Task</label>
+        <locationX>176</locationX>
+        <locationY>372</locationY>
+        <inputAssignments>
+            <field>ActivityDate</field>
+            <value>
+                <elementReference>DueDateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Follow up on this Account with Claude</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+    </recordCreates>
+    <recordCreates>
         <name>Create_Follow_Up_Task</name>
         <label>Create Follow Up Task</label>
         <locationX>176</locationX>
@@ -58,37 +89,6 @@
             <field>WhatId</field>
             <value>
                 <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-    </recordCreates>
-    <recordCreates>
-        <name>Create_Account_Follow_Up_Task</name>
-        <label>Create Account Follow Up Task</label>
-        <locationX>176</locationX>
-        <locationY>372</locationY>
-        <inputAssignments>
-            <field>ActivityDate</field>
-            <value>
-                <elementReference>DueDateFormula</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>$Record.OwnerId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Subject</field>
-            <value>
-                <stringValue>Follow up on this Account with Claude</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>WhatId</field>
-            <value>
-                <elementReference>$Record.AccountId</elementReference>
             </value>
         </inputAssignments>
         <object>Task</object>

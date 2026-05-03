@@ -3,6 +3,10 @@
 	
 	<types>
 		<members>Account.Account_Summary__c</members>
+		<members>Account.Name</members>
+		<members>Account.Industry</members>
+		<members>Account.Phone</members>
+		<members>Account.Rating</members>
 		<members>Account.Active__c</members>
 		<members>Account.CustomerPriority__c</members>
 		<members>Account.NumberofLocations__c</members>
@@ -56,7 +60,17 @@
 	<types>
 		<members>Soft_Drink_Order__c</members>
 		<members>Soft_Drink__c</members>
+		<members>Account</members>
 		<name>CustomObject</name>
+	</types>
+	
+	<types>
+		<members>AccountsController</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>myAccountsLwc</members>
+		<name>LightningComponentBundle</name>
 	</types>
 	<types>
 		<members>Opp_Prospecting_Follow_Up_Task</members>

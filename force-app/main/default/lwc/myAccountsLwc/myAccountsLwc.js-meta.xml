@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage">
+            <property name="displayLimit" type="Integer" label="Display Limit" description="Number of accounts to fetch (2–200)" default="50" min="2" max="200"/>
+        </targetConfig>
+        <targetConfig targets="lightning__HomePage">
+            <property name="displayLimit" type="Integer" label="Display Limit" description="Number of accounts to fetch (2–200)" default="50" min="2" max="200"/>
+        </targetConfig>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="displayLimit" type="Integer" label="Display Limit" description="Number of accounts to fetch (2–200)" default="50" min="2" max="200"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
