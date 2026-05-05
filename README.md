@@ -1,1 +1,1 @@
-# ClaudeRepo
+# Einstein-AI Code examples
