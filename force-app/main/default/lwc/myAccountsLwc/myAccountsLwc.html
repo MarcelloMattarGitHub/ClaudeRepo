@@ -1,0 +1,45 @@
+<template>
+    <div class="accounts-card">
+        <div class="card-header">
+            <h1 class="header-title">My Accounts</h1>
+        </div>
+
+        <div class="card-body" onscroll={handleScroll}>
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading accounts" size="medium"></lightning-spinner>
+            </template>
+
+            <template if:false={isLoading}>
+                <template if:true={error}>
+                    <div class="error-message">Unable to load accounts.</div>
+                </template>
+
+                <template for:each={accounts} for:item="account">
+                    <div key={account.Id} class="account-row">
+                        <div class="avatar" style={account.avatarStyle}>{account.initial}</div>
+                        <div class="account-info">
+                            <button class="account-name" data-id={account.Id} onclick={handleNameClick}>{account.Name}</button>
+                            <p class="account-detail">Industry: {account.Industry}</p>
+                            <p class="account-detail">Phone: {account.Phone}</p>
+                        </div>
+                        <div class="account-metrics">
+                            <p class="metric-label">Annual Revenue</p>
+                            <p class="revenue">{account.formattedRevenue}</p>
+                            <p class="rating-row">Rating&nbsp;<span class={account.ratingClass}>{account.Rating}</span>&nbsp;{account.ratingEmoji}</p>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={isLoadingMore}>
+                    <div class="loading-more">
+                        <lightning-spinner alternative-text="Loading more" size="small"></lightning-spinner>
+                    </div>
+                </template>
+            </template>
+        </div>
+
+        <div class="card-footer">
+            <span>Showing {displayCount} of {totalCount} Accounts</span>
+        </div>
+    </div>
+</template>

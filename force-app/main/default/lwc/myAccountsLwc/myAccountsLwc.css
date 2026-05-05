@@ -1,0 +1,164 @@
+.accounts-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    font-family: 'Salesforce Sans', Arial, sans-serif;
+}
+
+.card-header {
+    background: #0070d2;
+    padding: 16px 20px;
+}
+
+.header-title {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.card-body {
+    padding: 0 16px;
+    position: relative;
+    min-height: 60px;
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+.card-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.card-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.card-body::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border-radius: 3px;
+}
+
+.card-body::-webkit-scrollbar-thumb:hover {
+    background: #0070d2;
+}
+
+.account-row {
+    display: flex;
+    align-items: center;
+    padding: 16px 4px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.account-row:last-child {
+    border-bottom: none;
+}
+
+.avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-right: 16px;
+}
+
+.account-info {
+    flex: 1;
+}
+
+.account-name {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0070d2;
+    margin: 0 0 4px;
+    text-align: left;
+}
+
+.account-name:hover {
+    text-decoration: underline;
+}
+
+.account-detail {
+    font-size: 0.875rem;
+    color: #555555;
+    margin: 2px 0;
+}
+
+.account-metrics {
+    text-align: right;
+    min-width: 150px;
+}
+
+.metric-label {
+    font-size: 0.75rem;
+    color: #888888;
+    margin: 0 0 2px;
+}
+
+.revenue {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #080707;
+    margin: 0 0 4px;
+}
+
+.rating-row {
+    font-size: 0.875rem;
+    color: #555555;
+    margin: 0;
+}
+
+.rating-hot {
+    color: #2e844a;
+    font-weight: 600;
+}
+
+.rating-warm {
+    color: #fe9339;
+    font-weight: 600;
+}
+
+.rating-cold {
+    color: #0070d2;
+    font-weight: 600;
+}
+
+.rating-default {
+    color: #555555;
+    font-weight: 600;
+}
+
+.card-footer {
+    background: #e8f4ff;
+    padding: 14px 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #0070d2;
+    font-weight: 500;
+    border-top: 1px solid #c5dff8;
+    border-radius: 0 0 8px 8px;
+}
+
+.error-message {
+    padding: 16px;
+    color: #c23934;
+    text-align: center;
+}
+
+.loading-more {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
