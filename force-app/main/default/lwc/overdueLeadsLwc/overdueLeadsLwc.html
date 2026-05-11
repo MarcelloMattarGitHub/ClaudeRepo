@@ -1,0 +1,46 @@
+<template>
+    <lightning-card title="Overdue Leads" icon-name="standard:lead">
+        <div class="slds-p-horizontal_medium">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading overdue leads" size="medium"></lightning-spinner>
+            </template>
+
+            <template if:false={isLoading}>
+                <template if:true={error}>
+                    <div class="slds-text-color_error slds-p-vertical_small">{error}</div>
+                </template>
+
+                <template if:false={error}>
+                    <template if:true={leads.length}>
+                        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col"><div class="slds-truncate" title="Lead Name">Lead Name</div></th>
+                                    <th scope="col"><div class="slds-truncate" title="Company">Company</div></th>
+                                    <th scope="col"><div class="slds-truncate" title="Days Since Contact">Days Since Contact</div></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={leads} for:item="lead">
+                                    <tr key={lead.id} class="slds-hint-parent">
+                                        <td>
+                                            <button class="slds-button slds-button_reset slds-text-link" data-id={lead.id} onclick={navigateToLead}>
+                                                {lead.name}
+                                            </button>
+                                        </td>
+                                        <td><div class="slds-truncate" title={lead.company}>{lead.company}</div></td>
+                                        <td>{lead.daysSince}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </template>
+
+                    <template if:false={leads.length}>
+                        <div class="slds-text-align_center slds-p-vertical_medium">No overdue leads</div>
+                    </template>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

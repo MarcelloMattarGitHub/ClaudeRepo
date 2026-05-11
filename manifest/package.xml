@@ -29,6 +29,9 @@
 		<members>Lead.Primary__c</members>
 		<members>Lead.ProductInterest__c</members>
 		<members>Lead.SICCode__c</members>
+		<members>Lead.Last_Contacted_Date__c</members>
+		<members>Lead.Days_Since_Last_Contact__c</members>
+		<members>Lead.Overdue_Follow_Up__c</members>
 		<members>Metric.OrigMetricId__c</members>
 		<members>Opportunity.CurrentGenerators__c</members>
 		<members>Opportunity.DeliveryInstallationStatus__c</members>
@@ -66,7 +69,12 @@
 	
 	<types>
 		<members>AccountsController</members>
+		<members>LeadTriggerHandler</members>
 		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>LeadTrigger</members>
+		<name>ApexTrigger</name>
 	</types>
 	<types>
 		<members>myAccountsLwc</members>
