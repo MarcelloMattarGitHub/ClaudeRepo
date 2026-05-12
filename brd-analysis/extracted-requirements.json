@@ -1,0 +1,334 @@
+{
+  "source": "Sample_BRD_HealthConnect.pdf",
+  "extracted_at": "2026-05-12T16:27:30.921875",
+  "total_requirements": 45,
+  "sections": [
+    "3.2 Performance and Scalability",
+    "5 Integration Requirements",
+    "4 Reporting Requirements",
+    "2.2 Appointment Management",
+    "2.5 Prescription Management",
+    "2.1 Patient Registration and Profile Management",
+    "2.4 Secure Messaging",
+    "1 Executive Summary",
+    "3.1 Security and Compliance",
+    "2.3 Medical Records and Care Plans"
+  ],
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "text": "The solution must comply with HIPAA regulations and support 50,000+ active patients with role-based access for patients, caregivers, and healthcare providers.",
+      "section": "1 Executive Summary",
+      "page": 2,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-2.1",
+      "text": "2.1 Patient Registration and Profile Management",
+      "section": "2.1 Patient Registration and Profile Management",
+      "page": 2,
+      "priority": "medium"
+    },
+    {
+      "id": "REQ-001",
+      "text": "REQ-001 The system shall allow patients to self-register on the portal using their email address, date of birth, and medical record number for identity verification.",
+      "section": "2.1 Patient Registration and Profile Management",
+      "page": 2,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-002",
+      "text": "REQ-002 The system shall automatically match self-registered patients with existing Person Account records in Salesforce using the medical record number as the unique identifier.",
+      "section": "2.1 Patient Registration and Profile Management",
+      "page": 2,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-003",
+      "text": "REQ-003 The system must provide a patient profile page where patients can view and update their contact information, emergency contacts, insurance details, and communication preferences.",
+      "section": "2.1 Patient Registration and Profile Management",
+      "page": 2,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-004",
+      "text": "REQ-004 The system shall capture patient consent for data sharing and communication electronically, storing consent records with timestamps and IP addresses for HIPAA compliance.",
+      "section": "2.1 Patient Registration and Profile Management",
+      "page": 2,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-005",
+      "text": "REQ-005 Users should be able to upload identity documents (driver's license, insurance card) directly from the portal, with files stored securely in Salesforce Files.",
+      "section": "2.1 Patient Registration and Profile Management",
+      "page": 2,
+      "priority": "medium"
+    },
+    {
+      "id": "REQ-2.2",
+      "text": "2.2 Appointment Management",
+      "section": "2.2 Appointment Management",
+      "page": 2,
+      "priority": "medium"
+    },
+    {
+      "id": "REQ-006",
+      "text": "REQ-006 The system shall display a calendar view of all upcoming and past appointments, synced in real-time from the Epic EHR system via REST API integration.",
+      "section": "2.2 Appointment Management",
+      "page": 2,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-007",
+      "text": "REQ-007 Patients must be able to request new appointments by selecting a provider, specialty, preferred date range, and visit type through a guided screen flow.",
+      "section": "2.2 Appointment Management",
+      "page": 2,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-008",
+      "text": "REQ-008 The system shall send automated appointment reminders via email and SMS at 72 hours, 24 hours, and 2 hours before the scheduled appointment.",
+      "section": "2.2 Appointment Management",
+      "page": 2,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-009",
+      "text": "REQ-009 The system must allow patients to cancel or reschedule appointments up to 24 hours before the scheduled time, with cancellation reasons captured for analytics.",
+      "section": "2.2 Appointment Management",
+      "page": 2,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-010",
+      "text": "REQ-010 When an appointment is cancelled, the system shall automatically notify the care team and update the appointment status in both Salesforce and Epic EHR.",
+      "section": "2.2 Appointment Management",
+      "page": 2,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-2.3",
+      "text": "2.3 Medical Records and Care Plans",
+      "section": "2.3 Medical Records and Care Plans",
+      "page": 2,
+      "priority": "medium"
+    },
+    {
+      "id": "REQ-011",
+      "text": "REQ-011 The system shall provide read-only access to patient medical records including lab results, imaging reports, and clinical notes, retrieved from Epic EHR via HL7 FHIR API.",
+      "section": "2.3 Medical Records and Care Plans",
+      "page": 2,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-012",
+      "text": "REQ-012 The system must display active care plans with goals, tasks, and progress tracking. Patients should be able to mark care plan tasks as completed.",
+      "section": "2.3 Medical Records and Care Plans",
+      "page": 2,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-013",
+      "text": "REQ-013 The system shall calculate and display a Patient Health Score based on care plan adherence, appointment attendance, and medication compliance, using a custom formula.",
+      "section": "2.3 Medical Records and Care Plans",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-014",
+      "text": "REQ-014 Lab results flagged as critical must trigger an immediate notification to both the patient and their assigned care coordinator via Platform Events.",
+      "section": "2.3 Medical Records and Care Plans",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-015",
+      "text": "REQ-015 The system should allow patients to download their medical records as PDF documents for personal use or sharing with external providers.",
+      "section": "2.3 Medical Records and Care Plans",
+      "page": 3,
+      "priority": "medium"
+    },
+    {
+      "id": "REQ-2.4",
+      "text": "2.4 Secure Messaging",
+      "section": "2.4 Secure Messaging",
+      "page": 3,
+      "priority": "medium"
+    },
+    {
+      "id": "REQ-016",
+      "text": "REQ-016 The system shall provide a HIPAA-compliant secure messaging feature allowing patients to communicate with their care team directly through the portal.",
+      "section": "2.4 Secure Messaging",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-017",
+      "text": "REQ-017 Messages must be stored as Activity records associated with the patient's Person Account, with encryption at rest and in transit.",
+      "section": "2.4 Secure Messaging",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-018",
+      "text": "REQ-018 The system shall support file attachments in messages (lab results, photos) with a maximum file size of 25MB and virus scanning before storage.",
+      "section": "2.4 Secure Messaging",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-019",
+      "text": "REQ-019 When a patient sends a message, the system must automatically route it to the appropriate care team member based on the message category (billing, medical, pharmacy, general) using assignment rules.",
+      "section": "2.4 Secure Messaging",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-2.5",
+      "text": "2.5 Prescription Management",
+      "section": "2.5 Prescription Management",
+      "page": 3,
+      "priority": "medium"
+    },
+    {
+      "id": "REQ-020",
+      "text": "REQ-020 The system shall display a list of active and past prescriptions retrieved from the pharmacy module in Epic EHR.",
+      "section": "2.5 Prescription Management",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-021",
+      "text": "REQ-021 Patients must be able to request prescription refills through the portal, with the request routed to the assigned physician for approval via a Flow-based approval process.",
+      "section": "2.5 Prescription Management",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-022",
+      "text": "REQ-022 The system shall track prescription refill status (Requested, Under Review, Approved, Denied, Fulfilled) with real-time status updates visible to the patient.",
+      "section": "2.5 Prescription Management",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-023",
+      "text": "REQ-023 The system must send automated notifications when a prescription is due for refill within 7 days, calculated based on the prescription fill date and day supply.",
+      "section": "2.5 Prescription Management",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-3.1",
+      "text": "3.1 Security and Compliance",
+      "section": "3.1 Security and Compliance",
+      "page": 3,
+      "priority": "medium"
+    },
+    {
+      "id": "FR-001",
+      "text": "NFR-001 The system must enforce multi-factor authentication for all patient portal users using Salesforce MFA capabilities.",
+      "section": "3.1 Security and Compliance",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "FR-002",
+      "text": "NFR-002 All patient health information must be encrypted at rest using Salesforce Shield Platform Encryption and in transit using TLS 1.3.",
+      "section": "3.1 Security and Compliance",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "FR-003",
+      "text": "NFR-003 The system shall implement role-based access control with separate profiles for Patients, Caregivers, Care Coordinators, Physicians, and Portal Administrators.",
+      "section": "3.1 Security and Compliance",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "FR-004",
+      "text": "NFR-004 The system must maintain a complete audit trail of all data access and modifications to patient records using Salesforce Field Audit Trail.",
+      "section": "3.1 Security and Compliance",
+      "page": 3,
+      "priority": "high"
+    },
+    {
+      "id": "FR-005",
+      "text": "NFR-005 Patient data visibility must be restricted so that patients can only see their own records, caregivers can see their assigned patients, and providers can see patients in their care team.",
+      "section": "3.1 Security and Compliance",
+      "page": 4,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-3.2",
+      "text": "3.2 Performance and Scalability",
+      "section": "3.2 Performance and Scalability",
+      "page": 4,
+      "priority": "medium"
+    },
+    {
+      "id": "FR-006",
+      "text": "NFR-006 The portal must support concurrent access by at least 5,000 users with page load times under 3 seconds.",
+      "section": "3.2 Performance and Scalability",
+      "page": 4,
+      "priority": "high"
+    },
+    {
+      "id": "FR-007",
+      "text": "NFR-007 The Epic EHR integration must process appointment sync updates within 30 seconds of the source system change.",
+      "section": "3.2 Performance and Scalability",
+      "page": 4,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-024",
+      "text": "REQ-024 The system shall provide a Patient Engagement Dashboard showing appointment adherence rates, portal login frequency, message response times, and care plan completion percentages.",
+      "section": "4 Reporting Requirements",
+      "page": 4,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-025",
+      "text": "REQ-025 The system must generate monthly Patient Satisfaction Reports with drill-down by department, provider, and visit type, accessible to hospital administrators.",
+      "section": "4 Reporting Requirements",
+      "page": 4,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-026",
+      "text": "REQ-026 Care coordinators should have a real-time dashboard showing their assigned patients' health scores, upcoming appointments, and pending tasks.",
+      "section": "4 Reporting Requirements",
+      "page": 4,
+      "priority": "medium"
+    },
+    {
+      "id": "REQ-027",
+      "text": "REQ-027 The system shall integrate bidirectionally with Epic EHR via REST API for patient demographics, appointments, lab results, and prescription data with a sync frequency of every 15",
+      "section": "5 Integration Requirements",
+      "page": 4,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-028",
+      "text": "REQ-028 The system must integrate with Twilio for SMS notifications and appointment reminders.",
+      "section": "5 Integration Requirements",
+      "page": 4,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-029",
+      "text": "REQ-029 The system shall integrate with DocuSign for electronic consent form signing and storage.",
+      "section": "5 Integration Requirements",
+      "page": 4,
+      "priority": "high"
+    },
+    {
+      "id": "REQ-030",
+      "text": "REQ-030 The system must provide a webhook endpoint for Epic EHR to push real-time critical lab result notifications.",
+      "section": "5 Integration Requirements",
+      "page": 4,
+      "priority": "high"
+    }
+  ]
+}

@@ -2,191 +2,390 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+---
+
+## ⛔ CRITICAL: MANDATORY DELEGATION RULES ⛔
+
+### YOU (MAIN AGENT) ARE THE ORCHESTRATOR - NOT THE IMPLEMENTER
+
+**READ THIS CAREFULLY - THESE RULES ARE NON-NEGOTIABLE:**
+
+```
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║  🚫 YOU MUST NEVER DO THE FOLLOWING DIRECTLY:                                 ║
+║                                                                               ║
+║  ❌ Create Salesforce metadata files (.xml, .object-meta.xml, .field-meta.xml)║
+║  ❌ Write Apex code (.cls, .trigger files)                                    ║
+║  ❌ Create Lightning Web Components (.js, .html, .css in lwc/)                ║
+║  ❌ Write test classes                                                        ║
+║  ❌ Execute sf/sfdx deployment commands                                       ║
+║  ❌ Create Flows, Permission Sets, Validation Rules                           ║
+║  ❌ ANY Salesforce implementation work                                        ║
+║                                                                               ║
+║  ✅ YOU MUST ALWAYS DELEGATE TO SPECIALIST SUBAGENTS                          ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+```
+
+### SELF-CHECK BEFORE EVERY ACTION
+
+Before you write ANY file or execute ANY command related to Salesforce, ask yourself:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ STOP! Am I about to:                                            │
+│                                                                 │
+│ • Create a .cls file?           → DELEGATE to developer agent  │
+│ • Create a .trigger file?       → DELEGATE to developer agent  │
+│ • Create a .xml metadata file?  → DELEGATE to admin agent      │
+│ • Create a test class?          → DELEGATE to unit-testing agent│
+│ • Review code?                  → DELEGATE to code-review agent│
+│ • Deploy to org?                → DELEGATE to devops agent     │
+│ • Create documentation?         → DELEGATE to documentation agent│
+│ • Create ANY Salesforce file?   → DELEGATE to appropriate agent│
+│                                                                 │
+│ If YES to any above → STOP and DELEGATE immediately            │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### YOUR ONLY JOBS AS MAIN AGENT
+
+You are ONLY allowed to:
+
+1. ✅ **Receive** user requests
+2. ✅ **Invoke** the salesforce-design subagent FIRST
+3. ✅ **Display** Design Agent's requirements to user
+4. ✅ **Ask** user for confirmation
+5. ✅ **Invoke** other subagents in the correct order
+6. ✅ **Summarize** results after all agents complete
+7. ✅ **Answer** general questions (non-Salesforce implementation)
+
+---
+
+## Team Agent Orchestration
+
+### Complete Workflow (7 Agents)
+
+```
+USER REQUEST
+     │
+     ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  STEP 1: 🟠 salesforce-design (ALWAYS FIRST)                    │
+│  Invoke: "Use the salesforce-design subagent to                 │
+│          analyze this request: [user's request]"                │
+└─────────────────────────────────────────────────────────────────┘
+     │
+     ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  🚦 CONFIRMATION GATE #1                                        │
+│  Display Design Agent's plan → Ask user "Proceed? (yes/no/changes)" │
+└─────────────────────────────────────────────────────────────────┘
+     │
+     ▼ (only if user says yes)
+┌─────────────────────────────────────────────────────────────────┐
+│  STEP 2: 🔵 salesforce-admin (If Admin work in Design's plan)   │
+│  Invoke: "Use the salesforce-admin subagent to: [Design's prompt]" │
+└─────────────────────────────────────────────────────────────────┘
+     │
+     ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  STEP 3: 🟢 salesforce-developer (If Dev work in Design's plan) │
+│  Invoke: "Use the salesforce-developer subagent to: [Design's prompt]" │
+└─────────────────────────────────────────────────────────────────┘
+     │
+     ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  STEP 4: 🟡 salesforce-unit-testing (If Apex was created)       │
+│  Invoke: "Use the salesforce-unit-testing subagent to create    │
+│          test classes for the Apex code just created"           │
+└─────────────────────────────────────────────────────────────────┘
+     │
+     ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  STEP 5: 🟣 salesforce-code-review (BEFORE deployment)          │
+│  Invoke: "Use the salesforce-code-review subagent to review     │
+│          all code created by the developer and unit testing agents" │
+└─────────────────────────────────────────────────────────────────┘
+     │
+     ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  🚦 CODE REVIEW GATE                                            │
+│  If APPROVED → Proceed to Step 6                                │
+│  If CHANGES REQUIRED → User chooses to fix or skip              │
+│    → If fix: Send back to salesforce-developer                  │
+└─────────────────────────────────────────────────────────────────┘
+     │
+     ▼ (only if code review passed)
+┌─────────────────────────────────────────────────────────────────┐
+│  STEP 6 & 7: RUN IN PARALLEL                                    │
+│                                                                 │
+│  ┌───────────────────────┐    ┌───────────────────────┐        │
+│  │ 🔴 salesforce-devops  │    │ 🔷 salesforce-docs    │        │
+│  │ Deploy to org         │    │ Create documentation  │        │
+│  │ (with user confirm)   │    │ Save to docs/ folder  │        │
+│  └───────────────────────┘    └───────────────────────┘        │
+└─────────────────────────────────────────────────────────────────┘
+     │
+     ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  ✅ COMPLETE - Summarize all results to user                    │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Available Agents
+
+| Step | Agent | Color | When to Invoke |
+|------|-------|-------|----------------|
+| 1 | `salesforce-design` | 🟠 Orange | **ALWAYS FIRST** for any Salesforce request |
+| 2 | `salesforce-admin` | 🔵 Blue | When Design Agent identifies admin/declarative work |
+| 3 | `salesforce-developer` | 🟢 Green | When Design Agent identifies development work |
+| 4 | `salesforce-unit-testing` | 🟡 Yellow | After Developer creates any Apex code |
+| 5 | `salesforce-code-review` | 🟣 Purple | After Unit Testing, BEFORE deployment |
+| 6 | `salesforce-devops` | 🔴 Red | After Code Review passes (parallel with docs) |
+| 7 | `salesforce-documentation` | 🔷 Cyan | After Code Review passes (parallel with devops) |
+
+---
+
+### Exact Invocation Phrases
+
+Copy these EXACTLY when delegating:
+
+```
+# Step 1 - Design Agent (ALWAYS FIRST)
+Use the salesforce-design subagent to analyze this request: [paste user's request here]
+
+# Step 2 - Admin (if needed)
+Use the salesforce-admin subagent to: [paste Design Agent's admin prompt here]
+
+# Step 3 - Developer (if needed)
+Use the salesforce-developer subagent to: [paste Design Agent's developer prompt here]
+
+# Step 4 - Unit Testing (if Apex was created)
+Use the salesforce-unit-testing subagent to create test classes for the Apex code that was just created by the developer agent
+
+# Step 5 - Code Review (ALWAYS before deployment)
+Use the salesforce-code-review subagent to review all code created by the developer and unit testing agents
+
+# Step 6 - DevOps (after code review passes) - PARALLEL
+Use the salesforce-devops subagent to deploy all the components that were created to the Salesforce org
+
+# Step 7 - Documentation (after code review passes) - PARALLEL with DevOps
+Use the salesforce-documentation subagent to create documentation for this task
+```
+
+---
+
+### Parallel Execution (Steps 6 & 7)
+
+After code review passes, invoke BOTH agents:
+
+```
+Code review passed. Now executing deployment and documentation in parallel:
+
+1. Use the salesforce-devops subagent to deploy all components to the Salesforce org
+
+2. Use the salesforce-documentation subagent to create documentation for this task
+```
+
+Both agents run simultaneously:
+- **DevOps** → Deploys to org (with user confirmation)
+- **Documentation** → Creates docs (saves to docs/ folder)
+
+---
+
+### Code Review Gate Logic
+
+After code review completes:
+
+```
+IF verdict = "APPROVED" or "APPROVED WITH WARNINGS":
+    → Proceed to Step 6 & 7 (DevOps + Documentation)
+
+IF verdict = "CHANGES REQUIRED":
+    → Ask user: "Code review found critical issues. Do you want to:
+        [F] Fix issues (send back to developer)
+        [S] Skip and deploy anyway (not recommended)
+        [C] Cancel deployment"
+    
+    IF user says "F" or "Fix":
+        → Use salesforce-developer subagent to fix: [list of issues]
+        → After fix, re-run salesforce-code-review
+    
+    IF user says "S" or "Skip":
+        → Proceed to deployment with warning
+    
+    IF user says "C" or "Cancel":
+        → Stop workflow, do not deploy
+```
+
+---
+
+### Decision Tree for Every Salesforce Request
+
+```
+User asks something about Salesforce
+            │
+            ▼
+    Is it a question/discussion only?
+            │
+       ┌────┴────┐
+       │         │
+      YES        NO (implementation needed)
+       │         │
+       ▼         ▼
+   Answer it   MUST DELEGATE
+   yourself    │
+               ▼
+         Step 1: Invoke salesforce-design
+               │
+               ▼
+         Gate 1: User confirms design
+               │
+               ▼
+         Step 2-4: Admin → Developer → Unit Testing
+               │
+               ▼
+         Step 5: Code Review
+               │
+               ▼
+         Gate 2: Review verdict
+               │
+         ┌─────┴─────┐
+         │           │
+      PASSED      FAILED
+         │           │
+         ▼           ▼
+   Steps 6&7     Fix & Re-review
+   (parallel)
+```
+
+---
+
+### What Triggers Each Agent
+
+| If user mentions... | Agents Involved |
+|---------------------|-----------------|
+| Custom Object, Field, Validation Rule | design → admin → devops + docs |
+| Apex, Trigger, Class | design → admin → developer → unit-testing → code-review → devops + docs |
+| LWC, Lightning Component | design → developer → code-review → devops + docs |
+| Mixed (object + trigger) | design → admin → developer → unit-testing → code-review → devops + docs |
+
+---
+
+### Example: Correct Orchestration
+
+**User:** "Create a Feedback object with Rating field and a trigger for notifications"
+
+**You (Main Agent) should:**
+
+```
+Step 1: Design Analysis
+Use the salesforce-design subagent to analyze this request: Create a Feedback object with Rating field and a trigger for notifications
+
+[Wait for Design Agent → Show plan → Get user confirmation]
+
+Step 2: Admin Work
+Use the salesforce-admin subagent to: [Design's admin prompt]
+
+Step 3: Developer Work
+Use the salesforce-developer subagent to: [Design's developer prompt]
+
+Step 4: Unit Testing
+Use the salesforce-unit-testing subagent to create test classes for the Apex code
+
+Step 5: Code Review
+Use the salesforce-code-review subagent to review all code created
+
+[Wait for review verdict]
+
+Step 6 & 7: Parallel Execution
+Use the salesforce-devops subagent to deploy all components
+Use the salesforce-documentation subagent to create documentation
+
+[Summarize results]
+```
+
+---
+
+### Skip Rules (Only When User Explicitly Requests)
+
+| User says explicitly... | Action |
+|------------------------|--------|
+| "skip design" | Skip Design Agent |
+| "skip tests" | Skip unit-testing agent |
+| "skip review" | Skip code-review agent |
+| "don't deploy" or "no deployment" | Skip devops agent |
+| "no docs" or "skip documentation" | Skip documentation agent |
+| "just analyze" | Only invoke Design Agent |
+
+**If user does NOT explicitly say to skip → ALWAYS follow full workflow**
+
+---
+
+## Transparency & Confirmation Gates
+
+### Gate 1: Design Confirmation
+- Location: After Design Agent completes
+- File: `agent-output/design-requirements.md`
+- Ask: "Do you want to proceed with this plan? (yes/no/changes)"
+
+### Gate 2: Code Review
+- Location: After Code Review Agent completes
+- Verdicts: APPROVED, APPROVED WITH WARNINGS, CHANGES REQUIRED
+- If changes required, offer to fix via developer agent
+
+### Gate 3: Deployment Confirmation
+- Location: Inside DevOps Agent
+- Shows all components to deploy
+- User chooses: All, Partial, or Cancel
+
+---
+
 ## Project Overview
 
-This is a Salesforce DX project demonstrating Einstein AI / Agentforce capabilities. It includes:
-- Einstein Copilot actions via `@InvocableMethod` Apex classes
-- LLM prompt template invocations using `ConnectApi.EinsteinLLM`
-- A custom soft drink ordering system with AI-powered recommendations
-- FreshDesk external ticket integration
+This is a Salesforce DX project.
 
-**API version**: 59.0 | **Remote**: https://github.com/Salesforce-Developer9/Einstein-AI.git
+**API Version:** 65.0
+**Package Directory:** `force-app/main/default`
+**Documentation:** `docs/`
 
-## Commands
+### Key Conventions
+- **Field Prefixes**: 
+- **Trigger Pattern**: Handler pattern 
+- **Deployment**: Via Salesforce MCP only
 
-### LWC / JS Development
-```bash
-npm run lint                    # ESLint on LWC/Aura JS
-npm run test:unit               # Run Jest unit tests
-npm run test:unit:watch         # Watch mode
-npm run test:unit:coverage      # Coverage report
-npm run prettier                # Format all supported files
-npm run prettier:verify         # Verify formatting without writing
+---
+
+## Architecture Reference
+
+### OmniStudio Components
+- Integration Procedures: `Type_SubType` format
+- OmniScripts: `TypeSubTypeLanguage` format
+- DataRaptors: `DM`, `DML`, `DME` prefixes
+- FlexCards: `Name_Author_Version` format
+
+### Apex Patterns
+- `with sharing` for all service classes
+- Handler pattern for triggers
+- `AuraHandledException` for LWC errors
+- `WITH USER_MODE` for SOQL (API 65.0+)
+
+---
+
+## Final Reminder
+
 ```
-
-### Salesforce CLI
-```bash
-sf project deploy start                                              # Deploy to org
-sf project retrieve start                                            # Pull metadata from org
-sf org create scratch --def-file config/project-scratch-def.json    # Create scratch org
-sf apex run --file scripts/apex/hello.apex                          # Run anonymous Apex
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                                                                               ║
+║   YOU ARE THE ORCHESTRATOR.                                                   ║
+║   YOUR JOB IS TO DELEGATE, NOT TO IMPLEMENT.                                  ║
+║                                                                               ║
+║   7-AGENT WORKFLOW:                                                           ║
+║   Design → Admin → Developer → Unit Testing → Code Review → DevOps + Docs     ║
+║                                                                               ║
+║   When in doubt: DELEGATE TO A SUBAGENT.                                      ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
 ```
-
-## Architecture
-
-All Salesforce metadata lives under `force-app/main/default/`.
-
-### Apex Classes (`classes/`)
-
-| Class | Role |
-|---|---|
-| `CaseCopilot` | `@InvocableMethod` — creates Cases via Einstein Copilot; calls `TicketSystem` for FreshDesk |
-| `AccountSummaryPrompt` | `@InvocableMethod` — aggregates Soft Drink Orders + Cases for Einstein record summary |
-| `FlexTemplateController` | Calls `ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate('Customer_Pitch')` with account/product context; used by the LWC |
-| `SoftDrinkOrderController` | `@InvocableMethod` — creates `Soft_Drink_Order__c` records |
-| `TicketSystem` | HTTP callout to FreshDesk to create external support tickets |
-| `CaseUpdates` / `CaseUpdatesDataCloud` | Case update logic and Data Cloud integration |
-| `SoftDrinkOrderStatus` | Order status transitions |
-| `UserInfoHandler` | User info retrieval |
-| `ZipCodeName` | Zip code lookup utility |
-
-### LWC (`lwc/flexTemplateLwc/`)
-
-Single component that calls `FlexTemplateController` to render Einstein LLM prompt template output. Jest tests are in `__tests__/`.
-
-### Custom Objects
-
-- **`Soft_Drink__c`** — product catalog (name, price, rating, quantity, brewery info, etc.)
-- **`Soft_Drink_Order__c`** — order records linked to Account and Soft_Drink__c
-
-### Lead Customizations
-
-Custom fields on Lead:
-- **`Status_Claude__c`** (Picklist: `Working` / `Not Working`) — populated by `LeadStatusBatch`; visible on Lead Layout
-- **`Claude__c`** (Picklist: `Training` / `Test`) — visible on all 4 Lead layouts (Lead, Sales, Support, Marketing), below the `Status` field; read/edit granted to all profiles
-
-**`LeadStatusBatch`** (`classes/LeadStatusBatch.cls`) — batch class that sets `Status_Claude__c` based on `Status`:
-- `Status == 'Working - Contacted'` → `Status_Claude__c = 'Working'`
-- anything else → `Status_Claude__c = 'Not Working'`
-
-Run via Anonymous Apex: `Database.executeBatch(new LeadStatusBatch(), 200);`
-
-### Lead Layouts
-
-All 4 Lead layouts are now tracked locally under `layouts/`:
-- `Lead-Lead Layout.layout-meta.xml`
-- `Lead-Lead %28Sales%29 Layout.layout-meta.xml`
-- `Lead-Lead %28Support%29 Layout.layout-meta.xml`
-- `Lead-Lead %28Marketing%29 Layout.layout-meta.xml`
-
-### Profiles
-
-9 profiles are tracked locally under `profiles/`: Admin, Standard, Custom: Sales/Support/Marketing, Read Only, SolutionManager, ContractManager, MarketingProfile. Field permissions for new Lead fields must be added to all of them.
-
-### Flows (`flows/`)
-
-| Flow | Trigger | What it does |
-|---|---|---|
-| `Opp_Prospecting_Follow_Up_Task` | Opportunity Create, Stage = Prospecting | Creates two Tasks (due 3 days out): one linked to the Opportunity, one to the related Account |
-| `Create_a_Task_Flow` | AutoLaunched (input vars) | Generic task creator; accepts `relatedId` and `subject` input variables |
-| `Initiate_Return` | — | Order return initiation |
-| `Update_Soft_Drink_Flow` | — | Updates Soft Drink records |
-
-### Key Patterns
-
-- Einstein Copilot actions are Apex classes with `@InvocableMethod` — they receive structured input/output lists and are registered as copilot actions in the org.
-- LLM calls go through `ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate(templateName, inputParams)` — prompt templates are managed in the org (not in this repo).
-- External integration (FreshDesk) is handled via named credentials / HTTP callouts in `TicketSystem.cls`.
-
-### Deployment Manifest
-
-`manifest/package.xml` controls what is deployed. Edit it when adding/removing metadata types from deployments.
-
-# Rule: Salesforce Metadata Generation
-
-## Objective
-Enforce: **skill load -> API context -> file generation** for all Salesforce metadata.
-
-## Constraints
-
-1. **Never write** without a loaded metadata type skill for that type.
-2. **One type at a time** - complete the full cycle for the current type before moving to the next type.
-3. **Always attempt `salesforce-api-context` MCP** for each type before writing; if unavailable after a real attempt, fall back to the skill for that type and ensure it is loaded before generating files for that metadata type.
-4. **Child types need their own API context response** - if adding child metadata inside a parent metadata file, load the child metadata skill and use `salesforce-api-context` MCP for each child type separately; do not rely on the parent's schema or API context response for child metadata creation. The same fallback in constraint 3 applies.
-5. **Do not call `execute_metadata_action` unless a skill instructs you to do so.**
-
-## Initial Gate
-
-Never create files or generate metadata before completing skill selection.
-
-1. Determine whether the request is app-level or metadata-type-level.
-2. Identify the best-matching candidate skill for the request.
-3. If the request is app-level, identify the exact app-level skill that will orchestrate the work.
-4. If the request is metadata-type-level, identify the target metadata type and the best-matching per-type metadata skill for that type. Do not treat skill selection as the per-type skill-load step.
-5. Confirm skill selection with:
-   `intent=<app|type> | best_matched_skill=<exact-skill-name|none> | skill_selection=complete|pending`
-6. Set `skill_selection=complete` only after the exact selected skill name has been identified and recorded.
-7. Print this exact skill-selection status line in the chat before proceeding.
-
-Do not continue until `skill_selection=complete` and `best_matched_skill=<exact-skill-name|none>` are recorded.
-
-## App-Level Gate
-
-If `intent=app`, complete this gate before starting the per-type loop.
-
-1. Load the selected app-level skill.
-2. Use the loaded app-level skill to identify metadata types, dependency order, and orchestration requirements.
-3. Record:
-   `app_skill=<exact-skill-name|none> app_plan=complete|pending`
-
-Do not start any per-type skill load, API-context call, or metadata generation for an app-level request until `app_skill=<exact-skill-name|none>` and `app_plan=complete` are recorded.
-
-## Per-Type Loop (a-e)
-
-For each metadata type in scope, whether identified by an app-level skill or requested directly, execute steps a through e below one metadata type at a time. Do not create or modify files for the current metadata type, and do not move to the next metadata type, until steps a through e are complete.
-
-**a. Load Skill**
-- **Critical:** Load the best-matching skill for the current metadata type. No metadata may be generated for this type until the skill is loaded.
-- Record `best_matched_skill=<exact-skill-name|none>` for the current metadata type before proceeding.
-- Load once per type, not per record.
-- If no matching skill exists, stop and ask for guidance instead of writing without a skill.
-
-**b. Use `salesforce-api-context` MCP**
-- Use one or more of these tools as required:
-  - `get_metadata_type_sections`
-  - `get_metadata_type_context`
-  - `get_metadata_type_fields`
-  - `get_metadata_type_fields_properties`
-  - `search_metadata_types`
-- A real attempt means calling at least one relevant `salesforce-api-context` tool for the current metadata type and recording either the returned context or the failure/unavailable result.
-- Attempt API context for every type before writing.
-- Record `mcp=complete` and `mcp_tools=<tool-list>` for the current metadata type when API context succeeds.
-- If API context is unavailable after a real attempt, record `mcp=unavailable` and `mcp_tools=none`, ensure the skill for this type is loaded, and then continue using that skill.
-**c. Pre-Write Gate**
-- Before EVERY write: confirm `best_matched_skill=<exact-skill-name>` is recorded and that skill is loaded for this type.
-- Before EVERY write: confirm `mcp=complete` and `mcp_tools=<tool-list>` are recorded for this type, or confirm `mcp=unavailable` after a real attempt.
-
-**d. Generate Files**
-- Use the loaded skill + API context when both are available.
-- Use the loaded skill alone when API context was unavailable after a real attempt.
-- Generate all records for this type now.
-
-**e. Checkpoint**
-- Skill loaded? API context called or unavailable after a real attempt? All files written?
-- Only proceed to the next type when all are true.
-
-## Anti-Patterns
-
-| Don't | Why | Do |
-|-------|-----|-----|
-| Never write without loading the metadata skill | Missing platform constraints | Load the skill before any write |
-| Never mark `skill_selection=complete` without `best_matched_skill=<exact-skill-name\|none>` | Fake gate completion | Record the exact selected skill before continuing |
-| Never start per-type execution for an app-level request before loading the selected app-level skill | Orchestration is skipped | Complete the App-Level Gate before entering the per-type loop |
-| Never treat skill selection as skill loading | Fake gate completion | Perform the actual per-type skill load in step a |
-| Never skip the Initial Gate | Sequence breach | Complete skill selection before any generation |
-| Never reload a skill per record | Wastes tokens | Load once per type |
-| Never skip the API context attempt for any type | No schema for those types | Attempt API context for EVERY type |
-| Never write using API context alone without a loaded skill | Missing platform constraints | Load the skill first; if no matching skill exists, stop and ask for guidance |
-| Never write without recorded `mcp=complete` and `mcp_tools`, or `mcp=unavailable` | No evidence of MCP gate completion | Record MCP status and tool usage before any write |
-| Never skip any gate in the loop (skill load, API context, pre-write, checkpoint) | Wrong artifacts | Follow all mandatory gates in the loop (a-e) |
-| Never write with a missing checkpoint | Aware violation | Stop and complete missing step |

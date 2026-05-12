@@ -13,6 +13,8 @@ public with sharing class AccountsController {
         return new AccountsWrapper(accounts, total);
     }
 
+    //teste
+
     public class AccountsWrapper {
         @AuraEnabled public List<Account> accounts;
         @AuraEnabled public Integer totalCount;

@@ -1,0 +1,1 @@
+- [LWC internal SLDS tokens block deploy](deployment_lwc_internal_tokens.md) — `var(--lwc-colorText*)` in `c`-namespace LWC CSS causes deployment failure with INTERNAL access error; scan CSS before deploying.

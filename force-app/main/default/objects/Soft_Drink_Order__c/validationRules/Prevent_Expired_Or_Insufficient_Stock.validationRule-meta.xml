@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Expired_Or_Insufficient_Stock</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+        Soft_Drink__r.Status__c = 'Expired',
+        Quantity__c &gt; Soft_Drink__r.Quantity_Left__c
+    )</errorConditionFormula>
+    <errorMessage>Cannot save this order: the Soft Drink is either Expired or does not have enough stock to fulfill the requested quantity.</errorMessage>
+</ValidationRule>

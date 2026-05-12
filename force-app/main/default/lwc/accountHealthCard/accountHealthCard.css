@@ -1,0 +1,26 @@
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #ffffff;
+    line-height: 1.25rem;
+}
+
+.badge-good {
+    background-color: #2e844a;
+}
+
+.badge-average {
+    background-color: #f59300;
+}
+
+.badge-at-risk {
+    background-color: #c23934;
+}
+
+.badge-unknown {
+    background-color: #706e6b;
+    color: #ffffff;
+}

@@ -1,0 +1,27 @@
+<template>
+    <lightning-card title="Account Health" icon-name="standard:account">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <div class="slds-grid slds-grid_vertical slds-gutters_direct-small">
+                <template lwc:if={hasError}>
+                    <p class="slds-text-color_error">Unable to load health rating.</p>
+                </template>
+                <div class="slds-col">
+                    <span class={badgeClass}>{badgeLabel}</span>
+                </div>
+                <template lwc:if={hasLastEvaluated}>
+                    <div class="slds-col slds-m-top_small">
+                        <span class="slds-text-body_small slds-text-color_weak">Last evaluated:&nbsp;</span>
+                        <lightning-formatted-date-time
+                            value={lastEvaluated}
+                            year="numeric"
+                            month="short"
+                            day="2-digit"
+                            hour="2-digit"
+                            minute="2-digit">
+                        </lightning-formatted-date-time>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

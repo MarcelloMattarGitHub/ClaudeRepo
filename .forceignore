@@ -10,3 +10,10 @@ package.xml
 
 # LWC Jest
 **/__tests__/**
+
+# Einstein/Agentforce components — require org features not enabled in this scratch org
+**/classes/AccountSummaryPrompt.cls
+**/classes/AccountSummaryPrompt.cls-meta.xml
+**/classes/FlexTemplateController.cls
+**/classes/FlexTemplateController.cls-meta.xml
+#**/lwc/flexTemplateLwc/**

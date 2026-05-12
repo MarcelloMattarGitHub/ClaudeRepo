@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "Salesforce": {
+      "type": "stdio",
+      "command": "/usr/local/bin/npx",
+      "args": ["-y", "@salesforce/mcp", "--orgs", "SalesCloud", "--toolsets", "all"],
+      "env": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin"
+      }
+    }
+  }
+}

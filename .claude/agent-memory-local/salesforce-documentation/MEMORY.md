@@ -1,0 +1,1 @@
+- [Project Patterns](project-patterns.md) — trigger handler pattern, security conventions, API version (59.0), design requirements file location, bulk DML pattern
